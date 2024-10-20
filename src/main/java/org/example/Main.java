@@ -453,7 +453,7 @@ public class Main {
         }
     }
 
-    public static byte[] encrypt(String data, String key) throws Exception {
+    public static byte[] encript(String data, String key) throws Exception {
         KeySpec keySpec = new DESKeySpec(key.getBytes(StandardCharsets.UTF_8));
         SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
         SecretKey secretKey = keyFactory.generateSecret(keySpec);
@@ -464,26 +464,52 @@ public class Main {
         return cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
     }
 
-    public static void saveEncryptedFile(byte[] encryptedData, String filePath) throws Exception {
+    public static void guardarEncript(byte[] encryptedData, String filePath) throws Exception {
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
             fos.write(encryptedData);
         }
     }
 
+    public static byte[] desencriptar(byte[] encryptedData, String key) throws Exception {
+        KeySpec keySpec = new DESKeySpec(key.getBytes(StandardCharsets.UTF_8));
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
+        SecretKey secretKey = keyFactory.generateSecret(keySpec);
+
+        Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+
+        return cipher.doFinal(encryptedData);
+    }
+
+    public static byte[] leerarchivoencript(String filePath) throws Exception {
+        try (FileInputStream fis = new FileInputStream(filePath)) {
+            return fis.readAllBytes();
+        }
+    }
+
+    public static void guardarDesencript(byte[] decryptedData, String filePath) throws Exception {
+        try (FileOutputStream fos = new FileOutputStream(filePath)) {
+            fos.write(decryptedData);
+        }
+    }
+
 
     public static void main(String[] args) throws Exception {
-        String file = "1Klab01_books.csv";
-        String file2 = "1Klab01_search.csv";
+        String file = "100Klab01_books.csv";
+        String file2 = "100Klab01_search.csv";
         BTree tree = new BTree();
         ReaderCSV(file, tree);
         Exit(file2, tree);
         String file3 = "output.txt";
         String key = "ok:uo1IN";
         String data = new String(Files.readAllBytes(Paths.get(file3)));
-        byte[] encryptedData = encrypt(data, key);
-        String encryptedFilePath = "bitacora_encriptada.enc";
-        saveEncryptedFile(encryptedData, encryptedFilePath);
-
-
+        byte[] encriptData = encript(data, key);
+        String encriptFile = "bitacora_encriptada.enc";
+        guardarEncript(encriptData, encriptFile);
+        String fileEncript = "bitacora_encriptada.enc";
+        byte[] dataEncript = leerarchivoencript(fileEncript);
+        byte[] dataDencript = desencriptar(dataEncript, key);
+        String descripFile = "bitacora_desencriptada.txt";
+        guardarDesencript(dataDencript, descripFile);
     }
 }
