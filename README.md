@@ -1,4 +1,4 @@
-# LIBRERIA
+# LIBROS Y MÁS
 
 ## Introducción
 
@@ -69,3 +69,32 @@ Los resultados de las búsquedas se encriptan y almacenan en un archivo `.enc` p
 ### Ejecución:
 ```bash
 java Main
+```
+---
+
+### bitácora de entrada:
+```bash
+INSERT;{"isbn": "9780856397349", "name": "Then go hope attention friend peace create each.", "author": "Eric Fleming", "category": "Biography", "price": "15.78", "quantity": "690"}
+SEARCH;{"name": "Then go hope attention friend peace create each."}
+```
+---
+
+###  bitácora de salida:
+```bash
+{"isbn":"9780856397349","name":"Then go hope attention friend peace create each.","author":"Eric Fleming","category":"Biography","price":"74.60","quantity":"690"}
+```
+---
+
+### Decisiones:
+1. **Árbol B**:
+   - Se seleccionó un Árbol B debido a su eficiencia para manejar grandes volúmenes de datos y realizar operaciones de búsqueda, inserción y eliminación de manera rápida y eficiente.
+
+2. **DES para Encriptación**:
+   -  Se utilizó DES para encriptar los datos sensibles en el archivo de salida, protegiendo así la información durante la transmisión entre sucursales. Aunque DES no es el algoritmo más moderno, es adecuado para este proyecto por su simplicidad y facilidad de implementación.
+3. **Modo ECB con Padding PKCS#7**:
+   - El modo ECB fue elegido por su simplicidad y el padding PKCS#7 asegura que los datos se ajusten a los bloques de 64 bits requeridos por DES.
+
+### Conclusión:
+Este proyecto proporciona una solución segura y eficiente para la gestión de inventarios de la librería "Libros y Más", utilizando un Árbol B para las operaciones de búsqueda y un esquema de encriptación DES para proteger los resultados.
+
+
